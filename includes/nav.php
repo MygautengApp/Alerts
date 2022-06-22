@@ -17,7 +17,19 @@ if (isset($_SESSION['student-name'])) {
    
 }
 ?>
+<style>
+		.navbar {
+			background-color:#bca671;
+		}
+        .navbar a {
+			color:white;
+		}
+        .navbar a:hover {
+			color:green;
+		}
 
+
+	</style>
 
 
 <nav class="navbar navbar-inverse navbar-fixed-top">

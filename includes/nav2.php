@@ -3,6 +3,19 @@ require 'includes/db-inc.php';
 
 
  ?>
+ <style>
+		.navbar {
+			background-color:#bca671;
+		}
+        .navbar a {
+			color:white;
+		}
+        .navbar a:hover {
+			color:green;
+		}
+
+
+	</style>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">

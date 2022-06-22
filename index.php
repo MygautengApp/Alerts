@@ -100,9 +100,25 @@ require 'includes/db-inc.php';
 	<link rel="stylesheet" type="text/css" href="flickity/flickity.css">
 	<script type="text/javascript" src="flickity/flickity.js"></script>
 	<title>House of Resolution</title>
+	<style>
+		.navbar {
+			background-color:#bca671;
+		}
+		.navbar a {
+			color:white;
+		}
+		.navbar a:hover {
+			color:green;
+		}
+
+
+	</style>
 
 </head>
 <body>
+<div class="container">
+<header class="navbar   navbar-fixed-top">
+<nav class="navbar-inner">
 <div class="container">
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
@@ -136,32 +152,43 @@ require 'includes/db-inc.php';
 	  			<!-- <h1>Flickity - wrapAround</h1> -->
 
 
-					<div class="carousel" data-flickity='{ "autoPlay": true }'; >
+				  <div class="carousel" data-flickity='{ "autoPlay": true }'; >
 
-						  <div class="carousel-cell" auto-play >
-						  	<img src="ify/1.jpeg">
-						  </div>
-						  <div class="carousel-cell" auto-play>
-						  	<img src="ify/2.jpeg">
 
-						  </div>
-						  <div class="carousel-cell" auto-play>
-						  	 <img src="ify/3.jpeg">
-						  </div>
-						  
-						  <div class="carousel-cell" auto-play >
-						  	<img src="ify/4.jpeg">
-						  </div>
-						   <div class="carousel-cell" auto-play>
-						  	<img src="ify/5.jpeg">
-						  </div>
+<div class="carousel-cell" auto-play>
+		  <img src="ify/parliament1.jpg">
+	  </div>
+<div class="carousel-cell" auto-play>
+		  <img src="ify/parliament2.jpg">
+	  </div>
+<div class="carousel-cell" auto-play>
+		  <img src="ify/parliament3.jpg">
+	  </div>
 
-					</div>
+<div class="carousel-cell" auto-play>
+		  <img src="ify/parliament4.jpg">
+	  </div>
+	  <div class="carousel-cell" auto-play >
+		  <img src="ify/parliament5.jpg">
+	  </div>
+	  <div class="carousel-cell" auto-play>
+		  <img src="ify/parliament6.jpg">
+	</div>
+	 
+	  <div class="carousel-cell" auto-play >
+		  <img src="ify/parliament8.jpg">
+	  </div>
+	   <div class="carousel-cell" auto-play>
+		  <img src="ify/parliament9.jpg">
+	  </div>
+
+</div>
+
 
 					
 
-	  		</div>
-		</div>
+	  		
+		
 
 			  <!-- Default panel contents -->
 	
