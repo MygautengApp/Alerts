@@ -29,7 +29,7 @@ if (isset($_SESSION['student-name'])) {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Library Management System</a>
+            <a class="navbar-brand" href="#">Alerts Utility</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example">
