@@ -4,7 +4,7 @@ date_default_timezone_set('Africa/Johannesburg');
 $today = date('Y-m-d H:i:s', time());
 if ($db_handle) {
 
-echo 'Connection attempt succeeded.';
+//echo 'Connection attempt succeeded.';
 
 } else {
 
@@ -26,6 +26,7 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
 
   $count=pg_num_rows($rs);
   
+  
   if($count==0){
 	  
 	
@@ -43,9 +44,12 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
 	
 	              echo '<script>
 
-  alert("Alerts from ten days before Feedback time expires.");
+  alert( "Alerts from ten days before Feedback time expires.");
 
 </script>';
+
+
+// echo "the number of rows".$count;
 
 /*- Read the user (including email Address, Telephone)
 	If ParliamentID = NA/NCOP
@@ -70,45 +74,77 @@ where gmr.role_id in ('bungeni.NATable.ProceduralOfficer','bungeni.NATable.Senio
 }*/
 
 
-/*$query = "SELECT count(*) as _count,DATE_PART('day','$today'::timestamp  - '2022-06-03 14:37:47.881322'::timestamp) as dealine FROM public.doc 
-  where  type= 'event_house_resolution' and status ='awaiting_feedback' ";*/
-  
-
+$query = "SELECT * FROM public.doc
+  where status ='awaiting_feedback' and DATE_PART('day','$today'::timestamp  - '2022-06-03 14:37:47.881322'::timestamp)>=10";
+    echo $count.' '. "Resolution are within 10 days the feedback deadline";
+	 echo '<table class="table table-bordered table-striped">';
+                                echo "<thead>";
+                                    echo "<tr>";
+                                       // echo "<th>#</th>";
+                                        echo "<th>Title</th>";
+                                        echo "<th>Receipent</th>";
+                                        echo "<th>Deadline</th>";
+                                        echo "<th>Status </th>";
+                                        echo "<th>Days to Dealine</th>";
+                                       
+                                    echo "</tr>";
+                                echo "</thead>";
+                                echo "<tbody>";
    
-//$rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
+$rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
 
-	//$results = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
+	
  
  	  while ($row = pg_fetch_assoc($rs)) {
- 
- echo $row['email'];
-    
-    echo "\n";
+		  
+		 
+// Display Results of Search
 
-}
+                                        echo "<tr>";
+                                       // echo "<td>" . $row[''] . "</td>";
+										  echo "<td>" . $row['title']. "</td>";
+                                        echo "<td>" . $row['registry_number'] . "</td>";
+                                        echo "<td>" . $row['status_date'] . "</td>";
+                                        echo "<td>" . $row['status']. "</td>";
+										//echo "<td>" . $row['']. "</td>";
+										//echo "<td>" . $status . "</td>";
+									//	echo "<td>" . '<a href="read.php?idnumber='.$_SESSION["idnumber"].'" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>'."</td>";
+                                    
+                                    echo "</tr>";
+                                } 
+                                echo "</tbody>";                            
+                            echo "</table>";
+       
+		
+		
+    
+
+ 
+ //echo $row['title'];
+// echo $row['doc_type'];
+    
+    //echo "\n";
+
+ // }
 
 //sending of email
 
 
 
-if($query){
+
   
  
-    $to ='<'.$row['email'].'>';
+    $to ='<'.'thamsanqagumede30@gmail.com'.'>';
 $subject = 'Info Alerts';
-$message = "Good day ".$row['first_name']."\r\n "."Are left 3 days. Your login details are as follows:" ."\r\n "."Regards,"."\r\n "."ISSUED BY THE PARLIAMENT OF THE REPUBLIC OF SOUTH AFRICA";
+$message = "Good day ".'Thamsanga'."\r\n ".' '.$count.' '. "Resolution are within 10 days the feedback deadline" ."\r\n "."Regards,"."\r\n "."ISSUED BY THE PARLIAMENT OF THE REPUBLIC OF SOUTH AFRICA";
 
 $headers = 'From: '."Parliament". '<'.'rodwellshibambu@gmail.com'.'>' . PHP_EOL .
-    'Reply-To: '.$row['first_name']. '<'.$row['email'].'>' . PHP_EOL .
+    'Reply-To: '.'Thamsanga'. '<'.'thamsanqagumede30@gmail.com'.'>' . PHP_EOL .
     'X-Mailer: PHP/' . phpversion();
     $retval= mail($to, $subject,$message,$headers);
  
   // $retval = mail("To:".''.$email,"Account Password","You need to change password to your own:".''.$password1,"From: gautengapp@gauteng.gov.za");
-  }
-  else {
- 
-  
-  }
+
  
 
 
