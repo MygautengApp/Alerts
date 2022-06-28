@@ -72,10 +72,11 @@ where gmr.role_id in ('bungeni.NATable.ProceduralOfficer','bungeni.NATable.Senio
     echo "\n";
 
 }*/
+                   
 
-
-$query = "SELECT * FROM public.doc
-  where status ='awaiting_feedback' and DATE_PART('day','$today'::timestamp  - '2022-06-03 14:37:47.881322'::timestamp)>=10";
+$query = "SELECT title as name,registry_number,status,(CAST(MAX('$today')As date) - CAST(MIN(status_date) As date)) As days FROM public.doc 
+  where status ='awaiting_feedback' and DATE_PART('day','$today'::timestamp  - '2022-06-03 14:37:47.881322'::timestamp)>=10
+  group by doc_id";
     echo $count.' '. "Resolution are within 10 days the feedback deadline";
 	 echo '<table class="table table-bordered table-striped">';
                                 echo "<thead>";
@@ -83,8 +84,8 @@ $query = "SELECT * FROM public.doc
                                        // echo "<th>#</th>";
                                         echo "<th>Title</th>";
                                         echo "<th>Receipent</th>";
-                                        echo "<th>Deadline</th>";
-                                        echo "<th>Status </th>";
+                                        echo "<th>Status</th>";
+                                       // echo "<th>Status </th>";
                                         echo "<th>Days to Dealine</th>";
                                        
                                     echo "</tr>";
@@ -93,19 +94,22 @@ $query = "SELECT * FROM public.doc
    
 $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
 
+//$data =pg_fetch_result($rs,0,'Deadline1');
 	
  
- 	  while ($row = pg_fetch_assoc($rs)) {
+ 	 while ($row = pg_fetch_assoc($rs)) {
 		  
 		 
 // Display Results of Search
 
                                         echo "<tr>";
                                        // echo "<td>" . $row[''] . "</td>";
-										  echo "<td>" . $row['title']. "</td>";
+										  echo "<td>" . $row['name']. "</td>";
                                         echo "<td>" . $row['registry_number'] . "</td>";
-                                        echo "<td>" . $row['status_date'] . "</td>";
+                                      //  echo "<td>" . $row['status_date'] . "</td>";
                                         echo "<td>" . $row['status']. "</td>";
+										//echo "<td>" . $row['status_date']. "</td>";
+										echo "<td>" . $row['days']. "</td>";
 										//echo "<td>" . $row['']. "</td>";
 										//echo "<td>" . $status . "</td>";
 									//	echo "<td>" . '<a href="read.php?idnumber='.$_SESSION["idnumber"].'" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>'."</td>";
