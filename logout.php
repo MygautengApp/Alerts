@@ -1,7 +1,13 @@
-<?php 
+<?php
+require_once './config/config.php';
 session_start();
 session_destroy();
-// echo"You'll be Re-directed shortly";
-header("Location: index.php");
-exit();
-?>
+
+
+if(isset($_COOKIE['series_id']) && isset($_COOKIE['remember_token'])){
+	clearAuthCookie();
+}
+header('Location:index.php');
+exit;
+
+ ?>

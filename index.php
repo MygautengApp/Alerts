@@ -1,320 +1,108 @@
 <?php
-// session_start(); 
-// session_destroy();
-// if (!(isset($_SESSION['auth']) && $_SESSION['auth'] === true)) {
-// 	header("Location: admin.php?access=false");
-// 	exit();
-// }
-// else {
- 	// $admin = $_SESSION['admin'];
-// }
-require 'includes/snippet.php';
-require 'includes/db-inc.php';
- include "includes/header.php";
+session_start();
+require_once './config/config.php';
+require_once 'includes/auth_validate.php';
+date_default_timezone_set('Africa/Johannesburg');
+$today = date('Y-m-d H:i:s', time());
 
-	// if(isset($_SESSION['admin'])){
-	// 	$admin = $_SESSION['admin'];
-	// 	// echo "Hello $user";
-	// }
+//Get DB instance. function is defined in config.php
+$db = getDbInstance();
 
- if(isset($_POST['submit'])){
+//Get Dashboard information
+$numCustomers = $db->getValue ("customers", "count(*)");
+$query = "SELECT * FROM public.doc 
+  where  type= 'event_house_resolution' and status ='awaiting_feedback' and  DATE_PART('day','$today'::timestamp  - '2022-06-03 14:37:47.881322'::timestamp)>=10 ";
+  
 
-    $news = sanitize(trim($_POST['news']));
-
-    $sql = "INSERT into news (announcement) values ('$news')"; 
-
-    $query = mysqli_query($conn,$sql);
-    $error = false;
-
-       if($query){
-       $error = true;
-      }
-      else{
-        echo "<script>alert('Not successful!! Try again.');
-                    </script>"; 
-      }
- }
-
-     if(isset($_POST['UpDat'])){
-		$id = sanitize(trim($_POST['id']));
-        $text = sanitize(trim($_POST['text']));
-
-        $sql_up = "UPDATE news set announcement = '$text' where newsId = '$id'";
-		echo mysqli_error($sql_up);
-         $result = mysqli_query($conn,$sql_del);
-                if ($result)
-                {
-                    echo "<script>
-            
-           
-                   alert('Update successful');
-
-         </script>";
-                }
-
-
-     }
-
-     if(isset($_POST['del'])){
-
-        $id = sanitize(trim($_POST['id']));
-
-        $sql_del = "DELETE from news where newsId = $id"; 
-
-        $result = mysqli_query($conn,$sql_del);
-                if ($result)
-                {
-         //            echo "<script>
-            
-         //    var response = confirm('Would you like to delete the user');
-         //    if (response == true) {
-         //        alert('User was successfully deleted from the database');
-         //            location.href ='admin.php';
-         //    }   
-
-         //    else
-         //        {
-         //            alert('Could not delete user');
-         //        }
-            
-
-         // </script>";
-                }
-
-     }
+   
+$rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
 
 
 
 
 
-
-  ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="font-awesome-4.7.0/css/font-awesome.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="flickity/flickity.css">
-	<script type="text/javascript" src="flickity/flickity.js"></script>
-	<title>House of Resolution</title>
-	<style>
-		.navbar {
-			background-color:#bca671;
-		}
-		.navbar a {
-			color:white;
-		}
-		.navbar a:hover {
-			color:green;
-		}
-
-
-	</style>
-
-</head>
-<body>
-<div class="container">
-<header class="navbar   navbar-fixed-top">
-<nav class="navbar-inner">
-<div class="container">
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example">
-					<span class="sr-only">:</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">House of Resolution</a>
-			</div>
-
-			<div class="collapse navbar-collapse" id="bs-example">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-										
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="dailyalerts.php">Daily Alerts</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-</div>
-
-		<div class="container-fluid slide">
-			
-	  		<div class="slider">
-	  			<!-- <h1>Flickity - wrapAround</h1> -->
-
-
-				  <div class="carousel" data-flickity='{ "autoPlay": true }'; >
-
-
-<div class="carousel-cell" auto-play>
-		  <img src="ify/parliament1.jpg">
-	  </div>
-<div class="carousel-cell" auto-play>
-		  <img src="ify/parliament2.jpg">
-	  </div>
-<div class="carousel-cell" auto-play>
-		  <img src="ify/parliament3.jpg">
-	  </div>
-
-<div class="carousel-cell" auto-play>
-		  <img src="ify/parliament4.jpg">
-	  </div>
-	  <div class="carousel-cell" auto-play >
-		  <img src="ify/parliament5.jpg">
-	  </div>
-	  <div class="carousel-cell" auto-play>
-		  <img src="ify/parliament6.jpg">
-	</div>
-	 
-	  <div class="carousel-cell" auto-play >
-		  <img src="ify/parliament8.jpg">
-	  </div>
-	   <div class="carousel-cell" auto-play>
-		  <img src="ify/parliament9.jpg">
-	  </div>
-
-</div>
-
-
-					
-
-	  		
-		
-
-			  <!-- Default panel contents -->
-	
+  $count=pg_num_rows($rs);
 
 
 
-
-
-		<div class="container slide2">
-			
-			  <div class="panel-heading">
-		  	<div class="row">
-		  		<h3 class="center-block" style="font-size: 30px;">Published Announcements</h3>
-			</div>
-		  </div>
-		  <table class="table table-bordered" style="font-size: 18px;">
-         
-
-      		<thead>
-                <tr>
-                    <th>NewsId</th>
-                         <th>Announcement</th>
-                          
-                        
-                </tr>
-          </thead>
-
-           <?php 
-
-          $sql2 = "SELECT * from news";
-
-      $query2 = mysqli_query($conn, $sql2);
-      $counter = 1;
-      while ($row = mysqli_fetch_array($query2)) {  ?>
-
-
-        <tbody >
-          <td><?php echo $counter++; ?></td>
-          <td><?php echo $row['announcement']; ?></td>
+include_once('includes/header.php');
+?>
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Dashboard</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-bell fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge"><?php echo $count; ?></div>
+                            <div>Resolution</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="list.php">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-tasks fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">12</div>
+                            <div>New Tasks!</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
         
-        </tbody>
-
-     <?php }
-           ?>
-		        
-		         </tbody> 
-		   </table>
-		 
-	  </div>
-
-			
-			</div>
-	</div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            
+        </div>
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-8">
 
 
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-4">
 
-	  		<!-- <div class="row">
-	  			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 column">
-		  			<div class="page-header col-lg-offset-1">
-		  				<h2>Welcome to our portal</h2>
-		  			</div>
-	  				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-	  				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-	  				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-	  				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-	  				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-	  				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <!-- /.panel .chat-panel -->
+        </div>
+        <!-- /.col-lg-4 -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /#page-wrapper -->
 
-	  				<a href="addstudent.php"><p class="slide2"><button class="btn btn-success">Sign Up</button></p></a>
-	  			</div>
-	  			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 column">
-		  			<div class="page-header col-lg-offset-1">
-		  				<h2>24/7 Operational Support</h2>
-		  			</div>
-	  				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-	  				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-	  				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-	  				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-	  				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-	  				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-	  			</div>
-	  			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 column">
-	  				<div class="page-header col-lg-offset-1">
-	  				<h2>Why Us?</h2>
-	  			</div>
-	  				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-	  				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-	  				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-	  				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-	  				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-	  				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-	  			</div>
-	  		</div>
-		</div> -->
-
-		<div class="container-fluid slide3" style="background-color: #282828">
-			<div class="container">
-				<div class="row">
-				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-					<a href="#" class="thumbnail">
-						<img src="ify/9.jpeg">
-					</a>
-				</div>
-				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-					<a href="#" class="thumbnail">
-						<img src="ify/6.jpeg">
-					</a>
-				</div>
-				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-					<a href="#" class="thumbnail">
-						<img src="ify/7.jpeg">
-					</a>
-				</div>
-				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-					<a href="#" class="thumbnail">
-						<img src="ify/8.jpeg">
-					</a>
-				</div>
-			</div>
-			</div>
-			
-		</div>
-		
-
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
-</body>
-</html>
+<?php include_once('includes/footer.php'); ?>
