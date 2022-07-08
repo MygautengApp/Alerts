@@ -3,7 +3,6 @@ session_start();
 require_once 'config/config.php';
 require_once BASE_PATH . '/includes/auth_validate.php';
 
-
 // Costumers class
 require_once BASE_PATH . '/lib/Costumers/Costumers.php';
 $costumers = new Costumers();
@@ -115,40 +114,7 @@ if ($order_by == 'Desc') {
     </div>
 
 	<?php 
-	$query = "SELECT * FROM public.doc 
-  where  type= 'event_house_resolution' and status ='awaiting_feedback' and  (geolocation::DATE - '$today')<=10  ";
-  
-
-   
-$rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
-
-
-
-
-
-  $count=pg_num_rows($rs);
-  
-  
-  if($count==0){
-	  
 	
-	  
-	              echo '<script>
-
-  alert("No alerts.");
-
-</script>';
-	   
-	
-
-  }else{
-	  
-	
-	              echo '<script>
-
-  alert( "Alerts from ten days before Feedback time expires.");
-
-</script>';
 
 
 // echo "the number of rows".$count;
@@ -249,7 +215,7 @@ $headers = 'From: '."Parliament". '<'.'rodwellshibambu@gmail.com'.'>' . PHP_EOL 
 	
 	
 	$query = "SELECT doc_id,title as name,registry_number,status_date,status,(CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days,geolocation FROM public.doc 
-  where status ='awaiting_feedback' and (geolocation::DATE - '$today')<=10 
+  where doc_id =doc_id
   group by doc_id";
     echo $count.' '. "Resolution are within 10 days the feedback deadline";
    
@@ -296,7 +262,7 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
                                 echo "</tbody>";                            
                             echo "</table>";
        
-	}
+	
 	pg_close($db_handle);
    
 ?>  
@@ -305,7 +271,7 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
     <!-- Pagination -->
    
 	 <div class="text-center">
-    <?php echo paginationLinks($page, $total_pages, 'list.php'); ?>
+    <?php echo paginationLinks($page, $total_pages, 'listdetails.php'); ?>
     </div>
     <!-- //Pagination -->
 </div>
