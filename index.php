@@ -91,12 +91,15 @@ include_once('includes/header.php');
 					echo $row['days'];
 					
 					echo '</div>';
-					       echo $row['registry_number'];
+					     
+						    echo $row['registry_number'];
+						 $registry_number =$row['registry_number'];
+						 	$_SESSION["registry_number"]=$registry_number; 
                           //echo '<div>New Tasks!</div>';
                        echo '</div>';
                     echo '</div>';
                 echo '</div>';
-               echo '<a href="#">';
+               echo '<a href="listdetails.php?registry_number='.$registry_number.' ">';
                    echo '<div class="panel-footer">';
                       echo  '<span class="pull-left">View Details</span>';
                        echo '<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>';
@@ -160,12 +163,16 @@ include_once('includes/header.php');
 					echo $row['days'];
 					
 					echo '</div>';
-                         echo $row['registry_number'];
+                   
                           //echo '<div>New Tasks!</div>';
+						  echo $row['registry_number'];
+						 $registry_number =$row['registry_number'];
+						 	$_SESSION["registry_number"]=$registry_number; 
+						  
                        echo '</div>';
                     echo '</div>';
                 echo '</div>';
-               echo '<a href="#">';
+               echo '<a href="listdetails.php?registry_number='.$registry_number.' ">';
                    echo '<div class="panel-footer">';
                       echo  '<span class="pull-left">View Details</span>';
                        echo '<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>';

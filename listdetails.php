@@ -115,109 +115,14 @@ if ($order_by == 'Desc') {
 
 	<?php 
 	
+	$registry_number= $_GET['registry_number'];
+   $_SESSION['registry_number'] =$_GET['registry_number'];
 
-
-// echo "the number of rows".$count;
-
-/*- Read the user (including email Address, Telephone)
-	If ParliamentID = NA/NCOP
-    		then (Read Role (Procedural Officer, Senior Procedural Officer, ***)
-		Display email
-*/
-	 	  
-/*$query = "SELECT usr.salutation, usr.first_name, usr.last_name,usr.email,add.phone,gmr.role_id FROM public.group_membership_role gmr
-left join user_group_membership ugm on gmr.membership_id = ugm.membership_id
-left join public.user usr on usr.user_id = ugm.user_id
-left join address add on address_id =usr.user_id
-where gmr.role_id in ('bungeni.NATable.ProceduralOfficer','bungeni.NATable.SeniorProceduralOfficer','bungeni.NCOPTable.ProceduralOfficer','bungeni.NCOPTable.SeniorProceduralOfficer') and ugm.active_p=true";
-  
- $results = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
- 
- 	  while ($row = pg_fetch_assoc($results)) {
- 
- echo $row['email']."test2...".$row['phone']."test3...".$row['first_name']."test4...".$row['last_name']."test5...".$row['salutation'];
-    
-    echo "\n";
-
-}*/
-                   
-
-       
-		
-
- //echo $row['title'];
-// echo $row['doc_type'];
-    
-    //echo "\n";
-
- // }
-
-//sending of email
-                                            
-/*$query1 ="update public.doc set geolocation='2022-07-02 14:37:47.881322'
-	where doc_id ='5654'";
-  $result = pg_query($db_handle, $query1) or die("Cannot execute query: $query\n");
-  
-  if($result)
-  {
-	  echo "successfully updated";
-	  
-  }else{
-	  
-	  echo "not updated";
-  }*/
-
-/*$query1 ="Select geolocation from public.doc where doc_id ='5615'";
-
-$result = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
-  echo $result;*/
- 
-    $to ='<'.'thamsanqagumede30@gmail.com'.'>';
-$subject = 'Info Alerts';
-$message = "Good day ".'Thamsanga'."\r\n ".' '.$count.' '. "Resolution are within 10 days the feedback deadline" ."\r\n "."Regards,"."\r\n "."ISSUED BY THE PARLIAMENT OF THE REPUBLIC OF SOUTH AFRICA";
-
-$headers = 'From: '."Parliament". '<'.'rodwellshibambu@gmail.com'.'>' . PHP_EOL .
-    'Reply-To: '.'Thamsanga'. '<'.'thamsanqagumede30@gmail.com'.'>' . PHP_EOL .
-    'X-Mailer: PHP/' . phpversion();
-    $retval= mail($to, $subject,$message,$headers);
- 
-  // $retval = mail("To:".''.$email,"Account Password","You need to change password to your own:".''.$password1,"From: gautengapp@gauteng.gov.za");
-
- 
-
-
-
-
-       /*  $query="select u.salutation, u.first_name, u.last_name, u.email, gmr.role_id  from group_membership_role gmr 
-            left join user_group_membership ugm on gmr.membership_id = ugm.membership_id 
-            left join public.user u on u.user_id = ugm.user_id 
-            where gmr.role_id in ('bungeni.NATable.ProceduralOfficer','bungeni.NATable.SeniorProceduralOfficer') and ugm.active_p=true";
-			
-			
-			$results = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
- 
- 	  while ($row = pg_fetch_assoc($results)) {
- 
- echo $row['email']."".$row['role_id'];
-    
-    echo "\n";
-
-}*/
-
-  
-
-
-//echo $data;
-
-
-	
-	
-	
 	
 	$query = "SELECT doc_id,title as name,registry_number,status_date,status,(CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days,geolocation FROM public.doc 
-  where doc_id =doc_id
+  where registry_number ='$registry_number'
   group by doc_id";
-    echo $count.' '. "Resolution are within 10 days the feedback deadline";
+    
    
    
    
