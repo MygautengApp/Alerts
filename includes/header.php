@@ -7,7 +7,23 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        
+        <style>
+
+            
+.navbar{
+    background-color:#275937;
+                
+            } 
+            .navbar  a{
+                color:#fff;
+                
+            } 
+        .navbar  a:hover{
+             color:#fff;
+            }
+               
+                
+        </style>
         
         <meta name="description" content="">
         <meta name="author" content="">
