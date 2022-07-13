@@ -113,7 +113,7 @@ include_once('includes/header.php');
 				}else if($row['days']>=0 && $row['days']<=5 ){
                 
 						echo '<div class="col-lg-3 col-md-6">';
-              echo '<div class="panel panel-green">';
+              echo '<div class="panel panel-yellow">';
                 echo '<div class="panel-heading">';
                     echo '<div class="row">';
                        echo '<div class="col-xs-3">';
@@ -148,7 +148,7 @@ include_once('includes/header.php');
 			 }else if ($row['days']<0)
 			 {
 					echo '<div class="col-lg-3 col-md-6">';
-              echo '<div class="panel panel-green">';
+              echo '<div class="panel panel-red">';
                 echo '<div class="panel-heading">';
                     echo '<div class="row">';
                        echo '<div class="col-xs-3">';

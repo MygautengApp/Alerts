@@ -1,5 +1,5 @@
 <?php
-	require_once 'config/config.php';
+	$db_handle = pg_connect("host=localhost dbname=pg_catalog user=postgres password=Marhavuli8");
 date_default_timezone_set('Africa/Johannesburg');
 $today = date('Y-m-d H:i:s', time());
 date_default_timezone_set('Africa/Johannesburg');
