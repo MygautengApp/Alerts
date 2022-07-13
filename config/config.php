@@ -24,15 +24,15 @@ define('DB_NAME', "corephpadmin");
 
 //postgres connection
 
-$db_handle = pg_connect("host=localhost dbname=pg_catalog user=postgres password=Marhavuli8");
+$db_handle = pg_connect("host=localhost dbname=pg_catalog user=postgres password=Thami@97");
 
 if ($db_handle) {
 
-echo 'Connection attempt succeeded.';
+//echo 'Connection attempt succeeded.';
 
 } else {
 
-echo 'Connection attempt failed.';
+//echo 'Connection attempt failed.';
 
 }
 
