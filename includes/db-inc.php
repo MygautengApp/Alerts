@@ -1,5 +1,5 @@
 <?php 
-	$db_handle = pg_connect("host=localhost dbname=pg_catalog user=postgres password=Marhavuli8");
+	$db_handle = pg_connect("host=localhost dbname=pg_catalog user=postgres password=Munchie@#12");
 date_default_timezone_set('Africa/Johannesburg');
 $today = date('Y-m-d H:i:s', time());
 if ($db_handle) {
@@ -132,8 +132,8 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
 
 //sending of email
                                             
-/*$query1 ="update public.doc set geolocation='2022-07-02 14:37:47.881322'
-	where doc_id ='5654'";
+$query1 ="update public.doc set geolocation='2022-07-15 14:37:47.881322'
+	where doc_id ='5651'";
   $result = pg_query($db_handle, $query1) or die("Cannot execute query: $query\n");
   
   if($result)
@@ -143,7 +143,7 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
   }else{
 	  
 	  echo "not updated";
-  }*/
+  }
 
 /*$query1 ="Select geolocation from public.doc where doc_id ='5615'";
 

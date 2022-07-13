@@ -28,13 +28,13 @@ if (isset($_COOKIE['series_id']) && isset($_COOKIE['remember_token']))
 			// Verify if expiry time is modified. 
 			$expires = strtotime($row['expires']);
 
-			if (strtotime(date()) > $expires)
+			/*if (strtotime(date()) > $expires)
 			{
 				// Remember Cookie has expired. 
 				clearAuthCookie();
 				header('Location:login.php');
 				exit;
-			}
+			}*/
 
 			$_SESSION['user_logged_in'] = TRUE;
 			$_SESSION['admin_type'] = $row['admin_type'];
