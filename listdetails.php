@@ -110,14 +110,14 @@ if ($order_by == 'Desc') {
         <a href="export_customers.php"><button class="btn btn-sm btn-primary">Export to CSV <i class="glyphicon glyphicon-export"></i></button></a>
     </div>-->
 	 <div id="export-section">
-        <a href="export_list.php"><button class="btn btn-sm btn-primary">Export to CSV <i class="glyphicon glyphicon-export"></i></button></a>
+        <a href="export_singlelist.php"><button class="btn btn-sm btn-primary">Export to CSV <i class="glyphicon glyphicon-export"></i></button></a>
     </div>
 
 	<?php 
 	
 	$registry_number= $_GET['registry_number'];
    $_SESSION['registry_number'] =$_GET['registry_number'];
-
+$_SESSION["registry_number"]=$registry_number;
 	
 	$query = "SELECT doc_id,title as name,registry_number,status_date,status,(CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days,geolocation FROM public.doc 
   where registry_number ='$registry_number'

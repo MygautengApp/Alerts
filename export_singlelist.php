@@ -1,17 +1,25 @@
 <?php
-	require_once 'config/config.php';
+ session_start();
+$registry_number= $_GET['registry_number'];
+   $_SESSION['registry_number'] =$_GET['registry_number'];
+   
+require_once 'config/config.php';
 date_default_timezone_set('Africa/Johannesburg');
 $today = date('Y-m-d H:i:s', time());
 date_default_timezone_set('Africa/Johannesburg');
 $today = date('Y-m-d H:i:s', time());
-    
+   
 // Fetch records from database 
 
+	
+	
 
-
-	$query =pg_query($db_handle,"SELECT doc_id,title as name,registry_number,status_date,status,(CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days,geolocation FROM public.doc 
-  where status ='awaiting_feedback' and (geolocation::DATE - '$today')<=10 
+	
+	$query = pg_query($db_handle,"SELECT doc_id,title as name,registry_number,status_date,status,(CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days,geolocation FROM public.doc 
+  where registry_number ='$registry_number'
   group by doc_id");
+
+	
  
  
     $delimiter = ","; 
