@@ -1,9 +1,7 @@
 <?php 
-<<<<<<< HEAD
-	$db_handle = pg_connect("host=localhost dbname=pg_catalog user=postgres password=Thami@97");
-=======
-	$db_handle = pg_connect("host=localhost dbname=pg_catalog user=postgres password=Munchie@#12");
->>>>>>> 9c94cb8fa50ef1105ffce9eb0a56eb2c00e940f8
+
+	$db_handle = pg_connect("host=localhost dbname=pg_catalog user=postgres password=Marhavuli8");
+
 date_default_timezone_set('Africa/Johannesburg');
 $today = date('Y-m-d H:i:s', time());
 if ($db_handle) {

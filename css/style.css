@@ -42,6 +42,13 @@ body{
   color: red;
   margin: 15px 0px 20px;
 }
+.header {
+  padding: 60px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 30px;
+}
 
 .center-block{text-align: center;}
 

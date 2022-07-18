@@ -58,36 +58,38 @@ if (isset($_COOKIE['series_id']) && isset($_COOKIE['remember_token']))
 
 include BASE_PATH.'/includes/header.php';
 ?>
-<div id="page-" class="col-md-4 col-md-offset-4">
-	<form class="form loginform" method="POST" action="authenticate.php">
-		<div class="login-panel panel panel-default">
-			<div class="panel-heading">Please Sign in</div>
-			<div class="panel-body">
-				<div class="form-group">
-					<label class="control-label">username</label>
-					<input type="text" name="username" class="form-control" required="required">
-				</div>
-				<div class="form-group">
-					<label class="control-label">password</label>
-					<input type="password" name="passwd" class="form-control" required="required">
-				</div>
-				<div class="checkbox">
-					<label>
-						<input name="remember" type="checkbox" value="1">Remember Me
-					</label>
-				</div>
-				<?php if (isset($_SESSION['login_failure'])): ?>
-				<div class="alert alert-danger alert-dismissable fade in">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<?php
-					echo $_SESSION['login_failure'];
-					unset($_SESSION['login_failure']);
-					?>
-				</div>
-				<?php endif; ?>
-				<button type="submit" class="btn btn-success loginField">Login</button>
-			</div>
-		</div>
-	</form>
+<head>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<div class="header"  style=" padding: 60px;
+  text-align: center;
+  background: #275937;
+  color: white;
+  font-size: 30px;height:5px;">
+ 
+  <img src="images/parliament.png" style="padding-right:500px;top:0px;right:30px; position:absolute;height:19%;">
 </div>
+
+<div id="page-" class="col-md-4 col-md-offset-4" style="background: url(images/parliamenthouse.png);background-repeat: no-repeat;padding-right:20%;padding-top: 150px; width:500%;height:1000px;right:30px;" >
+
+
+<div  >
+
+<p><a href="index.php"><span><h2>View Utility Alert</h2></span></a></p>
+<!--<img src="images/parliamenthouse.png" style="padding-right:20%; width:500%;height:300%;right:30px;" >-->
+	
+		</div>
+	
+</div>
+<footer style=" position: fixed;
+    height: 50px;
+    background-color: #9e7c0c;
+    bottom: 0px;
+    left: 0px;
+    right: 50px;
+    margin-bottom: 0px;
+	 padding: 60px">
+  
+</footer>
+
 <?php include BASE_PATH.'/includes/footer.php'; ?>

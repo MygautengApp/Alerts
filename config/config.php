@@ -25,7 +25,7 @@ define('DB_NAME', "corephpadmin");
 //postgres connection
 
 
-$db_handle = pg_connect("host=localhost dbname=pg_catalog user=postgres password=Thami@97");
+$db_handle = pg_connect("host=localhost dbname=pg_catalog user=postgres password=Marhavuli8");
 
 
 if ($db_handle) {
