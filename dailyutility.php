@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once './config/config.php';
-include "includes/header.php";
+
 //require_once 'includes/auth_validate.php';
 date_default_timezone_set('Africa/Johannesburg');
 $today = date('Y-m-d H:i:s', time());

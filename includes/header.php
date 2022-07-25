@@ -58,7 +58,7 @@
        
         
             <!-- Navigation -->
-            <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] == true): ?>
+           <!-- <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] == true): ?>-->
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                  
                     <div class="navbar-header">
@@ -104,7 +104,7 @@
                             <ul class="nav"   id="side-menu">
                                 <li>
                         
-                                    <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                    <a href="dailyutility.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                                 </li>
 
                                 <li <?php echo (CURRENT_PAGE == "list.php" ) ? 'class="active"' : ''; ?>>

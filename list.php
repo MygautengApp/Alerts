@@ -4,17 +4,12 @@ require_once 'config/config.php';
 //require_once BASE_PATH . '/includes/auth_validate.php';
 
 
-// Costumers class
-require_once BASE_PATH . '/lib/Costumers/Costumers.php';
-$costumers = new Costumers();
+
 
 date_default_timezone_set('Africa/Johannesburg');
 $today = date('Y-m-d H:i:s', time());
 
-// Get Input data from query string
-$search_string = filter_input(INPUT_GET, 'search_string');
-$filter_col = filter_input(INPUT_GET, 'filter_col');
-$order_by = filter_input(INPUT_GET, 'order_by');
+
 
 // Per page limit for pagination.
 $pagelimit = 15;
@@ -24,40 +19,6 @@ $page = filter_input(INPUT_GET, 'page');
 if (!$page) {
 	$page = 1;
 }
-
-// If filter types are not selected we show latest added data first
-if (!$filter_col) {
-	$filter_col = 'id';
-}
-if (!$order_by) {
-	$order_by = 'Desc';
-}
-
-//Get DB instance. i.e instance of MYSQLiDB Library
-$db = getDbInstance();
-$select = array('id', 'f_name', 'l_name', 'gender', 'phone', 'created_at', 'updated_at');
-
-//Start building query according to input parameters.
-// If search string
-if ($search_string) {
-	$db->where('f_name', '%' . $search_string . '%', 'like');
-	$db->orwhere('l_name', '%' . $search_string . '%', 'like');
-}
-
-//If order by option selected
-if ($order_by) {
-	$db->orderBy($filter_col, $order_by);
-}
-
-// Set pagination limit
-$db->pageLimit = $pagelimit;
-
-// Get result of the query.
-$rows = $db->arraybuilder()->paginate('customers', $page, $select);
-$total_pages = $db->totalPages;
-
-
-
 
 
 
@@ -74,42 +35,10 @@ include BASE_PATH . '/includes/header.php';
     </div>
     <?php include BASE_PATH . '/includes/flash_messages.php';?>
 
-    <!-- Filters -->
-   <!-- <div class="well text-center filter-form">
-        <form class="form form-inline" action="">
-            <label for="input_search">Search</label>
-            <input type="text" class="form-control" id="input_search" name="search_string" value="<?php echo xss_clean($search_string); ?>">
-            <label for="input_order">Order By</label>
-            <select name="filter_col" class="form-control">
-                <?php
-foreach ($costumers->setOrderingValues() as $opt_value => $opt_name):
-	($order_by === $opt_value) ? $selected = 'selected' : $selected = '';
-	echo ' <option value="' . $opt_value . '" ' . $selected . '>' . $opt_name . '</option>';
-endforeach;
-?>
-            </select>
-            <select name="order_by" class="form-control" id="input_order">
-                <option value="Asc" <?php
-if ($order_by == 'Asc') {
-	echo 'selected';
-}
-?> >Asc</option>
-                <option value="Desc" <?php
-if ($order_by == 'Desc') {
-	echo 'selected';
-}
-?>>Desc</option>
-            </select>
-            <input type="submit" value="Go" class="btn btn-primary">
-        </form>
-    </div>
-    <hr>-->
-    <!-- //Filters -->
+  
 
 
-    <!--<div id="export-section">
-        <a href="export_customers.php"><button class="btn btn-sm btn-primary">Export to CSV <i class="glyphicon glyphicon-export"></i></button></a>
-    </div>-->
+   
 	 <div id="export-section">
         <a href="export_list.php"><button class="btn btn-sm btn-primary">Export to CSV <i class="glyphicon glyphicon-export"></i></button></a>
     </div>
@@ -159,7 +88,7 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
 		Display email
 */
 	 	  
-/*$query = "SELECT usr.salutation, usr.first_name, usr.last_name,usr.email,add.phone,gmr.role_id FROM public.group_membership_role gmr
+$query = "SELECT usr.salutation, usr.first_name, usr.last_name,usr.email,add.phone,gmr.role_id FROM public.group_membership_role gmr
 left join user_group_membership ugm on gmr.membership_id = ugm.membership_id
 left join public.user usr on usr.user_id = ugm.user_id
 left join address add on address_id =usr.user_id
@@ -169,11 +98,31 @@ where gmr.role_id in ('bungeni.NATable.ProceduralOfficer','bungeni.NATable.Senio
  
  	  while ($row = pg_fetch_assoc($results)) {
  
- echo $row['email']."test2...".$row['phone']."test3...".$row['first_name']."test4...".$row['last_name']."test5...".$row['salutation'];
+     $row['email']."test2...".$row['phone']."test3...".$row['first_name']."test4...".$row['last_name']."test5...".$row['salutation'];
     
     echo "\n";
 
-}*/
+}
+
+
+/* then (Read Role (Procedural Officer, Senior Procedural Officer, ***)
+		Display email*/
+
+   $query="select u.salutation, u.first_name, u.last_name, u.email, gmr.role_id  from group_membership_role gmr 
+            left join user_group_membership ugm on gmr.membership_id = ugm.membership_id 
+            left join public.user u on u.user_id = ugm.user_id 
+            where gmr.role_id in ('bungeni.NATable.ProceduralOfficer','bungeni.NATable.SeniorProceduralOfficer') and ugm.active_p=true";
+			
+			
+			$results = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
+ 
+ 	  while ($row = pg_fetch_assoc($results)) {
+ 
+       $row['email']."".$row['role_id'];
+    
+          echo "\n";
+
+      }
                    
 
        
@@ -186,8 +135,8 @@ where gmr.role_id in ('bungeni.NATable.ProceduralOfficer','bungeni.NATable.Senio
 
  // }
 
-//sending of email
-                                            
+
+    //updating the geolocation                                        
 /*$query1 ="update public.doc set geolocation='2022-07-02 14:37:47.881322'
 	where doc_id ='5654'";
   $result = pg_query($db_handle, $query1) or die("Cannot execute query: $query\n");
@@ -205,6 +154,8 @@ where gmr.role_id in ('bungeni.NATable.ProceduralOfficer','bungeni.NATable.Senio
 
 $result = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
   echo $result;*/
+  
+  //sending of email
  
     $to ='<'.'thamsanqagumede30@gmail.com'.'>';
 $subject = 'Info Alerts';
@@ -215,37 +166,7 @@ $headers = 'From: '."Parliament". '<'.'rodwellshibambu@gmail.com'.'>' . PHP_EOL 
     'X-Mailer: PHP/' . phpversion();
     $retval= mail($to, $subject,$message,$headers);
  
-  // $retval = mail("To:".''.$email,"Account Password","You need to change password to your own:".''.$password1,"From: gautengapp@gauteng.gov.za");
-
- 
-
-
-
-
-       /*  $query="select u.salutation, u.first_name, u.last_name, u.email, gmr.role_id  from group_membership_role gmr 
-            left join user_group_membership ugm on gmr.membership_id = ugm.membership_id 
-            left join public.user u on u.user_id = ugm.user_id 
-            where gmr.role_id in ('bungeni.NATable.ProceduralOfficer','bungeni.NATable.SeniorProceduralOfficer') and ugm.active_p=true";
-			
-			
-			$results = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
- 
- 	  while ($row = pg_fetch_assoc($results)) {
- 
- echo $row['email']."".$row['role_id'];
-    
-    echo "\n";
-
-}*/
-
   
-
-
-//echo $data;
-
-
-	
-	
 	
 	
 	$query = "SELECT doc_id,title as name,registry_number,status_date,status,(CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days,geolocation FROM public.doc 
@@ -305,7 +226,7 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
     <!-- Pagination -->
    
 	 <div class="text-center">
-    <?php echo paginationLinks($page, $total_pages, 'list.php'); ?>
+   <!--<?php echo paginationLinks($page, $total_pages, 'list.php'); ?>-->
     </div>
     <!-- //Pagination -->
 </div>

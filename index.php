@@ -27,7 +27,7 @@ require 'includes/snippet.php';
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="flickity/flickity.css">
 	<script type="text/javascript" src="flickity/flickity.js"></script>
-	<title>Library Management</title>
+	<title>Daily Utility System</title>
 
 </head>
 <body>
