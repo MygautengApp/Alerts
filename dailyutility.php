@@ -61,7 +61,7 @@ include_once('includes/header.php');
             </div>
         </div>
         <?php 
-							$query1 = "SELECT registry_number, (CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days   FROM public.doc 
+							$query1 = "SELECT registry_number, title as name , (CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days   FROM public.doc 
   where  type= 'event_house_resolution' and status ='awaiting_feedback' and (geolocation::DATE - '$today')<=10
   group by doc_id";
   
@@ -76,20 +76,42 @@ include_once('includes/header.php');
 				//echo $row['days'];
 				
 				if( $row['days']>5){
-					echo '<div class="col-lg-3 col-md-6">';
+					echo '<div class="col-lg-3 col-md-6 ">';
               echo '<div class="panel panel-green">';
                 echo '<div class="panel-heading">';
                     echo '<div class="row">';
                        echo '<div class="col-xs-3">';
-                            echo '<i class="fa fa-tasks fa-5x"></i>';
+                          /*echo '<i class="fa fa-tasks fa-5x"></i>';*/
                        echo '</div>';
                         echo '<div class="col-xs-9 text-right">';
                             echo '<div class="huge">';
-					
-					
-					
-					
-					echo $row['days'];
+                            
+                            if(strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== FALSE ){
+
+                                echo '<div style="font-size: 16.4px;">'; echo $row['name']; echo '</div>';
+
+                            }else if (strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Internet explorer') !== FALSE ){
+
+                                    echo '<div style="font-size: 16.4px;">'; echo $row['name']; echo '</div>';
+
+                                }else if (strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Firefox') !== FALSE ){
+
+                                    echo '<div style="font-size: 20px;">'; echo $row['name']; echo '</div>';
+                                }else if (strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Browser') !== FALSE ){
+
+                                    echo '<div style="font-size: 20px;">'; echo $row['name']; echo '</div>';
+                                }else if (strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Safari') !== FALSE ){
+
+                                    echo '<div style="font-size: 20px;">'; echo $row['name']; echo '</div>';
+
+
+                  }else{
+
+                               
+
+                               echo '<div style="font-size: 10.6px;">'; echo $row['name']; echo '</div>'; 
+
+                  }
 					
 					echo '</div>';
 					     
@@ -118,16 +140,38 @@ include_once('includes/header.php');
                 echo '<div class="panel-heading">';
                     echo '<div class="row">';
                        echo '<div class="col-xs-3">';
-                            echo '<i class="fa fa-tasks fa-5x"></i>';
+                        /*    echo '<i class="fa fa-tasks fa-5x"></i>';*/
                        echo '</div>';
                         echo '<div class="col-xs-9 text-right">';
                             echo '<div class="huge">';
+
+                            if(strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== FALSE ){
+
+                                echo '<div style="font-size: 16.4px;">'; echo $row['name']; echo '</div>';
+
+                            }else if (strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Internet explorer') !== FALSE ){
+
+                                echo '<div style="font-size: 16.4px;">'; echo $row['name']; echo '</div>';
+
+                            }else if (strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Firefox') !== FALSE ){
+
+                                echo '<div style="font-size: 20px;">'; echo $row['name']; echo '</div>';
+                            }else if (strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Browser') !== FALSE ){
+
+                                echo '<div style="font-size: 20px;">'; echo $row['name']; echo '</div>';
+                            }else if (strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Safari') !== FALSE ){
+
+                                echo '<div style="font-size: 20px;">'; echo $row['name']; echo '</div>';
+
+                  }else{
+
+                               
+
+                               echo '<div style="font-size: 10.6px;">'; echo $row['name']; echo '</div>'; 
+
+                  }
 					
-					
-					
-					
-					echo $row['days'];
-					
+
 					echo '</div>';
                          echo $row['registry_number'];
 						 $registry_number =$row['registry_number'];
@@ -153,15 +197,37 @@ include_once('includes/header.php');
                 echo '<div class="panel-heading">';
                     echo '<div class="row">';
                        echo '<div class="col-xs-3">';
-                            echo '<i class="fa fa-tasks fa-5x"></i>';
+                           /* echo '<i class="fa fa-tasks fa-5x"></i>';*/
                        echo '</div>';
                         echo '<div class="col-xs-9 text-right">';
                             echo '<div class="huge">';
 					
-					
-					
-					
-					echo $row['days'];
+                            if(strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== FALSE ){
+
+                                echo '<div style="font-size: 16.4px;">'; echo $row['name']; echo '</div>';
+                            }else if (strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Internet explorer') !== FALSE ){
+
+                                echo '<div style="font-size: 16.4px;">'; echo $row['name']; echo '</div>';
+
+                            }else if (strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Firefox') !== FALSE ){
+
+                                echo '<div style="font-size: 20px;">'; echo $row['name']; echo '</div>';
+                            }else if (strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Browser') !== FALSE ){
+
+                                echo '<div style="font-size: 20px;">'; echo $row['name']; echo '</div>';
+                            }else if (strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Safari') !== FALSE ){
+
+                                echo '<div style="font-size: 20px;">'; echo $row['name']; echo '</div>';
+                                
+
+
+                  }else{
+
+                               
+
+                               echo '<div style="font-size: 10.6px;">'; echo $row['name']; echo '</div>'; 
+
+                  }
 					
 					echo '</div>';
                    

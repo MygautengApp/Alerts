@@ -1,6 +1,6 @@
 <?php 
 
-	$db_handle = pg_connect("host=localhost dbname=pg_catalog user=postgres password=Marhavuli8");
+	$db_handle = pg_connect("host=localhost dbname=pg_catalog user=postgres password=Munchie@#12");
 
 date_default_timezone_set('Africa/Johannesburg');
 $today = date('Y-m-d H:i:s', time());
@@ -123,7 +123,69 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
                                 echo "</tbody>";                            
                             echo "</table>";
        
-		
+   $query1 = "SELECT short_name FROM public.group";
+
+ 
+
+  echo '<table class="table table-bordered table-striped">';
+
+                                echo "<thead>";
+
+                                    echo "<tr>";
+
+                                        echo "<th>#</th>";
+
+                                      
+
+                                                                                                                                                echo "<th>Recipient</th>";
+
+                                                                                                                                               
+
+                                                                                                                                               
+
+                                       
+
+                                    echo "</tr>";
+
+                                echo "</thead>";
+
+                                echo "<tbody>";
+
+  
+
+$rs1 = pg_query($db_handle, $query1) or die("Cannot execute query: $query\n");
+
+ 
+
+//$data =pg_fetch_result($rs,0,'Deadline1');
+
+             
+
+               while ($row = pg_fetch_assoc($rs1)) {
+
+                              
+
+                              
+
+// Display Results of Search
+
+ 
+
+                                      
+
+      echo "<td>" . $row['short_name'] . "</td>";
+
+                                                                                                                                 
+
+                                   
+
+                                    echo "</tr>";
+
+                                }
+
+                                echo "</tbody>";                           
+
+                            echo "</table>";		
 
  //echo $row['title'];
 // echo $row['doc_type'];
