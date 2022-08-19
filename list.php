@@ -166,12 +166,25 @@ $headers = 'From: '."Parliament". '<'.'rodwellshibambu@gmail.com'.'>' . PHP_EOL 
     'X-Mailer: PHP/' . phpversion();
     $retval= mail($to, $subject,$message,$headers);
  
+ /* $query = "SELECT d.doc_id,g.group_id,ugm.group_id,d.title as name,d.registry_number,g.short_name,d.status_date,d.status,(CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days,geolocation FROM public.doc d
+  left join public.group g on d.doc_id =g.group_id
+  left join public.user_group_membership ugm on g.group_id =d.doc_id
   
+  where d.status ='awaiting_feedback' and DATE_PART('day','$today'::timestamp  - '2022-06-03 14:37:47.881322'::timestamp)>=10 
+  group by d.doc_id,g.group_id,ugm.group_id";*/
+	
+/*	
+$query = "SELECT doc_id,title as name,registry_number,status_date,status,(CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days,geolocation FROM public.doc 
 	
 	
-	$query = "SELECT doc_id,title as name,registry_number,status_date,status,(CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days,geolocation FROM public.doc 
   where status ='awaiting_feedback' and (geolocation::DATE - '$today')<=10 
-  group by doc_id";
+  group by doc_id";;*/
+	
+	$query = "SELECT d.doc_id,g.group_id,ugm.group_id,d.title as name,d.registry_number,g.short_name,d.status_date,d.status,(CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days,geolocation FROM public.doc d
+  left join public.group g on d.doc_id =g.group_id
+  left join public.user_group_membership ugm on g.group_id =d.doc_id
+  where d.status ='awaiting_feedback' and (geolocation::DATE - '$today')<=10 
+  group by d.doc_id,g.group_id,ugm.group_id";
     echo $count.' '. "Resolution are within 10 days the feedback deadline";
    
    
@@ -183,6 +196,7 @@ $headers = 'From: '."Parliament". '<'.'rodwellshibambu@gmail.com'.'>' . PHP_EOL 
                echo '<th width="5%">ID</th>';
                 echo '<th width="45%">Title</th>';
                echo '<th width="20%">RegNumber</th>';
+			    echo '<th width="20%">Receipient</th>';
                 echo '<th width="20%">Deadline</th>';
                echo '<th width="10%">Status</th>';
 				echo '<th width="10%">Days to Dealine</th>';
@@ -206,6 +220,7 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
                 echo "<td>" .$row['doc_id']. "</td>";
                echo "<td>" .xss_clean($row['name']). "</td>";
                 echo "<td>" .xss_clean($row['registry_number']). "</td>";
+				echo "<td>" .xss_clean($row['short_name']). "</td>";
                 echo "<td>" .xss_clean($row['geolocation']). "</td>";
 			   echo "<td>" .xss_clean($row['status']). "</td>";
 				echo "<td>" .xss_clean($row['days']) . "</td>";
