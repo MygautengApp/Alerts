@@ -19,6 +19,7 @@ $query = "SELECT * FROM public.doc
   where  type= 'event_house_resolution' and status ='awaiting_feedback' and  DATE_PART('day','$today'::timestamp  - '2022-06-03 14:37:47.881322'::timestamp)>=10 ";
   
 
+  
    
 $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
 
@@ -76,9 +77,13 @@ where gmr.role_id in ('bungeni.NATable.ProceduralOfficer','bungeni.NATable.Senio
 }*/
                    
 
-$query = "SELECT doc_id,title as name,registry_number,status_date,status,(CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days,geolocation FROM public.doc 
-  where status ='awaiting_feedback' and DATE_PART('day','$today'::timestamp  - '2022-06-03 14:37:47.881322'::timestamp)>=10
-  group by doc_id";
+				   
+$query = "SELECT d.doc_id,g.group_id,ugm.group_id,d.title as name,d.registry_number,g.short_name,d.status_date,d.status,(CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days,geolocation FROM public.doc d
+  left join public.group g on d.doc_id =g.group_id
+  left join public.user_group_membership ugm on g.group_id =d.doc_id
+  
+  where d.status ='awaiting_feedback' and DATE_PART('day','$today'::timestamp  - '2022-06-03 14:37:47.881322'::timestamp)>=10 and ugm.active_p=true
+  group by d.doc_id,g.group_id,ugm.group_id";
     echo $count.' '. "Resolution are within 10 days the feedback deadline";
 	 echo '<table class="table table-bordered table-striped">';
                                 echo "<thead>";
@@ -86,6 +91,8 @@ $query = "SELECT doc_id,title as name,registry_number,status_date,status,(CAST(M
                                         echo "<th>#</th>";
                                         echo "<th>Title</th>";
                                         echo "<th>RegNumber</th>";
+										echo "<th>Short Name</th>";
+										echo "<th>Recipient</th>";
 										echo "<th>Deadline </th>";
                                         echo "<th>Status</th>";
                                        // echo "<th>Status </th>";
@@ -110,6 +117,10 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
                                        echo "<td>" . $row['doc_id'] . "</td>";
 										  echo "<td>" . $row['name']. "</td>";
                                         echo "<td>" . $row['registry_number'] . "</td>";
+										echo "<td>" . $row['short_name'] . "</td>";
+										
+										 echo "<td>" . $row['group_id'] . "</td>";
+										
                                       echo "<td>" . $row['geolocation'] . "</td>";
                                         echo "<td>" . $row['status']. "</td>";
 										//echo "<td>" . $row['geolocation']. "</td>";
@@ -123,6 +134,10 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
                                 echo "</tbody>";                            
                             echo "</table>";
        
+	   
+
+	   
+	   
 		
 
  //echo $row['title'];
@@ -134,11 +149,14 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
 
 //sending of email
                                             
-$query1 ="update public.doc set geolocation='2022-07-15 14:37:47.881322'
-	where doc_id ='5651'";
-  $result = pg_query($db_handle, $query1) or die("Cannot execute query: $query\n");
+
   
-  if($result)
+/*                                              
+$query2 ="update public.doc set geolocation='2022-08-11 14:37:47.881322'
+	where doc_id ='5615'";
+  $result2 = pg_query($db_handle, $query2) or die("Cannot execute query: $query\n");
+  
+  if($result2)
   {
 	  echo "successfully updated";
 	  
@@ -146,7 +164,35 @@ $query1 ="update public.doc set geolocation='2022-07-15 14:37:47.881322'
 	  
 	  echo "not updated";
   }
-
+  
+                                            
+$query3 ="update public.doc set geolocation='2022-08-09 14:37:47.881322'
+	where doc_id ='5650'";
+  $result3 = pg_query($db_handle, $query3) or die("Cannot execute query: $query\n");
+  
+  if($result3)
+  {
+	  echo "successfully updated";
+	  
+  }else{
+	  
+	  echo "not updated";
+  }
+  
+                                              
+$query4 ="update public.doc set geolocation='2022-08-07 14:37:47.881322'
+	where doc_id ='5651'";
+  $result4 = pg_query($db_handle, $query4) or die("Cannot execute query: $query\n");
+  
+  if($result4)
+  {
+	  echo "successfully updated";
+	  
+  }else{
+	  
+	  echo "not updated";
+  }
+*/
 /*$query1 ="Select geolocation from public.doc where doc_id ='5615'";
 
 $result = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");

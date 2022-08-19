@@ -30,6 +30,9 @@ $rs = pg_query($db_handle, $query) or die("Cannot execute query: $query\n");
 include_once('includes/header.php');
 ?>
 <div id="page-wrapper">
+
+ 
+
     <div class="row">
         <div class="col-lg-12">
         <h1 class="page-header">Dashboard</h1>
@@ -47,7 +50,7 @@ include_once('includes/header.php');
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge"><?php echo $count; ?></div>
-                            <div>Resolution</div>
+                            <div>Resolutions</div>
                         </div>
                     </div>
                 </div>
@@ -61,7 +64,7 @@ include_once('includes/header.php');
             </div>
         </div>
         <?php 
-							$query1 = "SELECT registry_number, (CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days   FROM public.doc 
+							$query1 = "SELECT registry_number,title as name, (CAST(MAX(geolocation)As date) - CAST(MIN('$today') As date)) As days   FROM public.doc 
   where  type= 'event_house_resolution' and status ='awaiting_feedback' and (geolocation::DATE - '$today')<=10
   group by doc_id";
   
@@ -77,19 +80,24 @@ include_once('includes/header.php');
 				
 				if( $row['days']>5){
 					echo '<div class="col-lg-3 col-md-6">';
-              echo '<div class="panel panel-green">';
+              echo '<div class="panel panel-green" >';
                 echo '<div class="panel-heading">';
                     echo '<div class="row">';
-                       echo '<div class="col-xs-3">';
-                            echo '<i class="fa fa-tasks fa-5x"></i>';
-                       echo '</div>';
+                      /* echo '<div class="col-xs-3">';
+                           // echo '<i class="fa fa-tasks fa-5x"></i>';
+                       echo '</div>';*/
                         echo '<div class="col-xs-9 text-right">';
                             echo '<div class="huge">';
 					
+					if(strlen($row['name'])<30){
+						  echo '<div style="font-size: 16.4px;">'; echo $row['name']; echo '</div>';
+					  }else{
+						  
+						 echo '<div style="font-size: 10.6px;">'; echo $row['name']; echo '</div>';  
+					  }
 					
 					
-					
-					echo $row['days'];
+					//echo '<div style="font-size: 10.6px;">'; echo $row['name']; echo '</div>';
 					
 					echo '</div>';
 					     
@@ -114,19 +122,24 @@ include_once('includes/header.php');
 				}else if($row['days']>=0 && $row['days']<=5 ){
                 
 						echo '<div class="col-lg-3 col-md-6">';
-              echo '<div class="panel panel-yellow">';
+              echo '<div class="panel panel-yellow"  style="max-height: 100vh;overflow: hidden;">';
                 echo '<div class="panel-heading">';
                     echo '<div class="row">';
-                       echo '<div class="col-xs-3">';
-                            echo '<i class="fa fa-tasks fa-5x"></i>';
-                       echo '</div>';
+                      /* echo '<div class="col-xs-3">';
+                           // echo '<i class="fa fa-tasks fa-5x"></i>';
+                       echo '</div>';*/
                         echo '<div class="col-xs-9 text-right">';
                             echo '<div class="huge">';
 					
+					if(strlen($row['name'])<30){
+						  echo '<div style="font-size: 16.4px;">'; echo $row['name']; echo '</div>';
+					  }else{
+						  
+						 echo '<div style="font-size: 10.6px;">'; echo $row['name']; echo '</div>';  
+					  }
 					
 					
-					
-					echo $row['days'];
+			      // echo '<div style="font-size: 10.6px;">'; echo $row['name']; echo '</div>';
 					
 					echo '</div>';
                          echo $row['registry_number'];
@@ -149,19 +162,23 @@ include_once('includes/header.php');
 			 }else if ($row['days']<0)
 			 {
 					echo '<div class="col-lg-3 col-md-6">';
-              echo '<div class="panel panel-red">';
+              echo '<div class="panel panel-red"  style="max-height: 100vh;overflow: hidden;">';
                 echo '<div class="panel-heading">';
                     echo '<div class="row">';
-                       echo '<div class="col-xs-3">';
-                            echo '<i class="fa fa-tasks fa-5x"></i>';
-                       echo '</div>';
+                      /* echo '<div class="col-xs-3">';
+                           echo '<i class="fa fa-tasks fa-5x"></i>';
+                       echo '</div>';*/
                         echo '<div class="col-xs-9 text-right">';
                             echo '<div class="huge">';
 					
+					  if(strlen($row['name'])<30 && strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== FALSE ){
+						  echo '<div style="font-size: 16.4px;">'; echo $row['name']; echo '</div>';
+					  }else{
+						  
+						 echo '<div style="font-size: 10.6px;">'; echo $row['name']; echo '</div>';  
+					  }
 					
 					
-					
-					echo $row['days'];
 					
 					echo '</div>';
                    
