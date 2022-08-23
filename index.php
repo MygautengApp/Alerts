@@ -10,7 +10,7 @@
 // }
 require 'includes/snippet.php';
 
- include "includes/header.php";
+// include "includes/header.php";
 
 
 

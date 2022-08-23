@@ -88,7 +88,7 @@
                                     <a href="dailyutility.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                                 </li>
 
-                                <li <?php echo (CURRENT_PAGE == "list.php" ) ? 'class="active"' : ''; ?>>
+                              <!--  <li <?php echo (CURRENT_PAGE == "list.php" ) ? 'class="active"' : ''; ?>>-->
                                     <a href="#"><i class="fa fa-bell fa-fw"></i> Alerts Utility<span class="fa arrow"></span></a>
                                     <ul class="nav nav-second-level">
                                         <li>
